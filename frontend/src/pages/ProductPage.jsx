@@ -6,7 +6,8 @@ import { useStore } from '../context/StoreContext';
 import { ProductCard } from '../components/ProductCard';
 import { SectionHeading } from '../components/SectionHeading';
 import { RatingStars } from '../components/RatingStars';
-import { IconArrowRight, IconCheck, IconHeart, IconShield, IconTruck } from '../components/Icons';
+import { IconArrowRight, IconCheck, IconHeart, IconShield, IconTruck, IconX } from '../components/Icons';
+import { reviewHighlights, sizeGuides } from '../data/siteContent';
 
 export function ProductPage() {
   const { slug } = useParams();
@@ -20,6 +21,7 @@ export function ProductPage() {
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [showSizeGuide, setShowSizeGuide] = useState(false);
 
   useEffect(() => {
     let alive = true;
@@ -86,6 +88,9 @@ export function ProductPage() {
     );
   }
 
+  const sizeGuide = sizeGuides[product.category] || sizeGuides.default;
+  const reviews = reviewHighlights(product);
+
   return (
     <div className="section">
       <div className="container">
@@ -133,7 +138,12 @@ export function ProductPage() {
             </div>
 
             <div className="variant-group">
-              <span className="variant-group__label">Size</span>
+              <div className="variant-group__top">
+                <span className="variant-group__label">Size</span>
+                <button className="text-button" type="button" onClick={() => setShowSizeGuide(true)}>
+                  Size guide
+                </button>
+              </div>
               <div className="chip-row">
                 {product.sizes.map((size) => (
                   <button
@@ -223,6 +233,25 @@ export function ProductPage() {
           </article>
         </div>
 
+        <section className="section section--compact">
+          <SectionHeading
+            eyebrow="Reviews"
+            title="Realistic customer proof for stronger product trust."
+          />
+          <div className="review-grid">
+            {reviews.map((review) => (
+              <article className="review-card" key={review.name}>
+                <div className="review-card__top">
+                  <RatingStars rating={review.rating} />
+                  <span>{review.date}</span>
+                </div>
+                <p>"{review.text}"</p>
+                <strong>{review.name}</strong>
+              </article>
+            ))}
+          </div>
+        </section>
+
         {related.length ? (
           <section className="section section--compact">
             <SectionHeading
@@ -237,6 +266,49 @@ export function ProductPage() {
           </section>
         ) : null}
       </div>
+
+      {showSizeGuide ? (
+        <div className="modal-backdrop" role="presentation" onClick={() => setShowSizeGuide(false)}>
+          <div
+            className="modal-panel size-guide"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="size-guide-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="modal-panel__header">
+              <div>
+                <p className="eyebrow">Fit Guide</p>
+                <h2 id="size-guide-title">{product.category} size guide</h2>
+              </div>
+              <button className="icon-button icon-button--plain" type="button" onClick={() => setShowSizeGuide(false)} aria-label="Close size guide">
+                <IconX className="icon-button__icon" />
+              </button>
+            </div>
+            <p className="size-guide__note">{sizeGuide.note}</p>
+            <div className="size-guide__table-wrap">
+              <table className="size-guide__table">
+                <thead>
+                  <tr>
+                    {sizeGuide.columns.map((column) => (
+                      <th key={column}>{column}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {sizeGuide.rows.map((row) => (
+                    <tr key={row.join('-')}>
+                      {row.map((cell) => (
+                        <td key={cell}>{cell}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

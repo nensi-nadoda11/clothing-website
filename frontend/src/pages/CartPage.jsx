@@ -86,7 +86,7 @@ export function CartPage() {
                       <p>{item.category}</p>
                       <p className="cart-item__variant">
                         {item.size ? `Size: ${item.size}` : 'One size'}
-                        {item.color ? ` · Color: ${item.color}` : ''}
+                        {item.color ? ` | Color: ${item.color}` : ''}
                       </p>
                     </div>
                     <button className="icon-button icon-button--plain" type="button" onClick={() => removeFromCart(item.key)}>

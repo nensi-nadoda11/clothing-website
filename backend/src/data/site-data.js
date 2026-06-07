@@ -84,7 +84,7 @@ export const testimonials = [
 
 export const policies = {
   shipping:
-    'Free shipping on orders above ₹4,999. Standard shipping usually takes 3-5 business days in this demo experience.',
+    'Free shipping on orders above Rs. 4,999. Standard shipping usually takes 3-5 business days in this demo experience.',
   returns:
     'Easy 7-day exchange window with clear return policy messaging shown across the cart and product pages.',
   payment:

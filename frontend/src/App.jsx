@@ -12,6 +12,8 @@ import { ContactPage } from './pages/ContactPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { AccountPage } from './pages/AccountPage';
 import { AuthPage } from './pages/AuthPage';
+import { PolicyPage } from './pages/PolicyPage';
+import { TrackOrderPage } from './pages/TrackOrderPage';
 
 function ScrollToTop() {
   const location = useLocation();
@@ -37,6 +39,8 @@ export function App() {
           <Route path="/wishlist" element={<WishlistPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/track-order" element={<TrackOrderPage />} />
+          <Route path="/policies/:slug" element={<PolicyPage />} />
           <Route path="/login" element={<AuthPage mode="login" />} />
           <Route path="/register" element={<AuthPage mode="register" />} />
           <Route path="/account" element={<AccountPage />} />

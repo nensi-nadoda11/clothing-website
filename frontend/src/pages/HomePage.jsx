@@ -194,7 +194,7 @@ export function HomePage() {
           <div className="testimonial-grid">
             {(homeData?.testimonials || testimonials).map((item) => (
               <article className="testimonial-card" key={item.name}>
-                <p className="testimonial-card__quote">“{item.quote}”</p>
+                <p className="testimonial-card__quote">"{item.quote}"</p>
                 <strong>{item.name}</strong>
                 <span>{item.role}</span>
               </article>

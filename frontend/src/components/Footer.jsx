@@ -17,8 +17,18 @@ export function Footer() {
             <Link to="/wishlist">Wishlist</Link>
             <Link to="/login">Login</Link>
             <Link to="/register">Register</Link>
+            <Link to="/track-order">Track Order</Link>
             <Link to="/about">About</Link>
             <Link to="/contact">Contact</Link>
+          </div>
+        </div>
+        <div>
+          <h4>Policies</h4>
+          <div className="site-footer__links">
+            <Link to="/policies/shipping">Shipping</Link>
+            <Link to="/policies/returns">Returns</Link>
+            <Link to="/policies/privacy">Privacy</Link>
+            <Link to="/policies/terms">Terms</Link>
           </div>
         </div>
         <div className="site-footer__contact">

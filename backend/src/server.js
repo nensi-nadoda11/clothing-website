@@ -4,6 +4,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { getBackendPort, getHost } from './config/env.js';
 import {
   categories,
   collections,
@@ -22,7 +23,8 @@ import {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
-const port = process.env.PORT || 4000;
+const port = getBackendPort();
+const host = getHost();
 const frontendDist = path.resolve(__dirname, '../../frontend/dist');
 const authStorePath = path.resolve(__dirname, './data/auth-store.json');
 const defaultAuthStore = { users: [], sessions: [] };
@@ -335,6 +337,54 @@ app.post('/api/checkout/summary', (request, response) => {
   });
 });
 
+app.get('/api/orders/:orderId/track', (request, response) => {
+  const orderId = String(request.params.orderId || '').trim().toUpperCase();
+
+  if (!/^MA-\d{6}$/.test(orderId)) {
+    response.status(404).json({ message: 'Enter a valid demo order ID like MA-123456.' });
+    return;
+  }
+
+  response.json({
+    orderId,
+    status: 'Packed for dispatch',
+    estimatedDelivery: '3-5 business days',
+    destination: site.contact.address,
+    updatedAt: new Date().toISOString(),
+    support: {
+      email: site.contact.email,
+      phone: site.contact.phone
+    },
+    steps: [
+      {
+        label: 'Order confirmed',
+        detail: 'Payment and customer details are captured for the demo order.',
+        state: 'complete'
+      },
+      {
+        label: 'Quality check',
+        detail: 'Items are checked for size, color, and packaging quality.',
+        state: 'complete'
+      },
+      {
+        label: 'Packed for dispatch',
+        detail: 'The order is ready to be handed to the shipping partner.',
+        state: 'current'
+      },
+      {
+        label: 'Out for delivery',
+        detail: 'The courier will contact the customer before delivery.',
+        state: 'upcoming'
+      },
+      {
+        label: 'Delivered',
+        detail: 'The customer receives delivery confirmation and support options.',
+        state: 'upcoming'
+      }
+    ]
+  });
+});
+
 app.post('/api/orders', (request, response) => {
   const items = Array.isArray(request.body?.items) ? request.body.items : [];
   const customer = request.body?.customer || {};
@@ -465,6 +515,6 @@ if (fs.existsSync(frontendDist)) {
   });
 }
 
-app.listen(port, () => {
-  console.log(`Backend running on http://localhost:${port}`);
+app.listen(port, host, () => {
+  console.log(`Backend running on port ${port}`);
 });

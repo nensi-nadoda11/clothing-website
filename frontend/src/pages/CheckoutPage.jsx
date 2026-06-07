@@ -129,6 +129,10 @@ export function CheckoutPage() {
                   <span>Total paid</span>
                   <strong>{formatCurrency(success.summary.total)}</strong>
                 </div>
+                <Link className="button button--primary" to={`/track-order?orderId=${success.orderId}`}>
+                  Track order
+                  <IconArrowRight className="button__icon" />
+                </Link>
                 <Link className="button button--ghost" to="/shop">
                   Continue shopping
                 </Link>

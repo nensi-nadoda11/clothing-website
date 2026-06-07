@@ -5,6 +5,9 @@ backend/node_modules
 frontend/node_modules
 .DS_Store
 *.log
+.env
+.env.*
+!.env.example
 package-lock.json
 frontend/package-lock.json
 backend/package-lock.json
