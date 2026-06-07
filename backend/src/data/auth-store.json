@@ -1,0 +1,19 @@
+{
+  "users": [
+    {
+      "id": "405e3861-1020-4847-bbfe-500df07c3666",
+      "name": "Demo User",
+      "email": "demo+8af43c57@example.com",
+      "salt": "e5883dde6280b2e4a3668e577ae9ccfb",
+      "hash": "b4cbb6e68222f03ceaf7c2627ff538b7771551ae51baec02aad9fc51741afd33242e321358113e129730ed9d9316c79af5fffcfbe234fd9e650a0bab61c13776",
+      "createdAt": "2026-06-05T04:33:03.999Z"
+    }
+  ],
+  "sessions": [
+    {
+      "token": "dae7b588d4f80850e8fda2b3691e1d2fef453982dd660789bddfe89fffbde109",
+      "userId": "405e3861-1020-4847-bbfe-500df07c3666",
+      "createdAt": "2026-06-05T04:33:03.999Z"
+    }
+  ]
+}
